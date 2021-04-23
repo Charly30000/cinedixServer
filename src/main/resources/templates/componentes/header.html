@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Navbar</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="#">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+
+
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li sec:authorize="!isAuthenticated()"><a
+							class="btn btn-outline-primary" th:href="@{/login}">Iniciar
+								sesion</a></li>
+						<li sec:authorize="isAuthenticated()">
+							<form th:action="@{/logout}" method="post" id="logoutForm">
+								<button class="btn btn-outline-danger"
+									onclick="document.getElementById('logoutForm').submit();"
+									type="submit">Cerrar sesion</button>
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<section th:replace="componentes/alerts :: alerts"></section>
+	</header>
+</body>
+</html>

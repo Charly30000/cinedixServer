@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<th:block th:include="componentes/head :: head"></th:block>
 </head>
 <body>
-	Hola mundo
+<header th:replace="componentes/header :: header"></header>
+	
+Te encuentras en index
+	
+<footer th:replace="componentes/footer :: footer"></footer>
 </body>
 </html>
