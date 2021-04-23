@@ -5,10 +5,22 @@
 </head>
 <body>
 <header th:replace="componentes/header :: header"></header>
-	<div class="container">
-	Te encuentras en index
+	
+<div class="container mt-5">
+<div class="row">
+		<div class="col-md-12">
+			<h2>
+				Error 403
+			</h2>
+			<p>
+				¡El sitio web al que intentas acceder esta denegado!	
+			</p>
+			<p>
+				<a class="btn btn-outline-danger" th:href="@{/index}">Ir al inicio »</a>
+			</p>
+		</div>
 	</div>
-
+</div>
 	
 <footer th:replace="componentes/footer :: footer"></footer>
 </body>
