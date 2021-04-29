@@ -7,11 +7,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.cinedix.server.app.auth.filter.JWTAuthenticationFilter;
+import com.cinedix.server.app.auth.filter.JWTAuthorizationFilter;
+import com.cinedix.server.app.auth.service.JWTService;
 import com.cinedix.server.app.models.service.JpaUserDetailsService;
 
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -21,16 +25,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JpaUserDetailsService userDetailsService;
 	
+	@Autowired
+	private JWTService jwtService;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login").permitAll()
+			.formLogin().loginPage("/login").permitAll()
 		.and()
-		.logout().permitAll()
+			.logout().permitAll()
 		.and()
-		.exceptionHandling().accessDeniedPage("/errors/error_403");
+			.exceptionHandling().accessDeniedPage("/errors/error_403")
+		.and()
+			.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtService))
+			.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtService))
+			.csrf().disable()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Autowired

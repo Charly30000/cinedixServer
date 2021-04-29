@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cinedix.server.app.models.entity.Usuario;
 
 @RestController
-@RequestMapping("/api")
+@Secured("ROLE_USER")
+@RequestMapping("/api/clientes")
 public class ClienteRestController {
-	
-	@Secured("ROLE_USER")
+
 	@GetMapping("/usuarios")
 	public /*@ResponseBody */List<Usuario> ejemploRest() {
 		List<Usuario> usuarios = new ArrayList<>();
