@@ -26,7 +26,7 @@ public class JWTServiceImpl implements JWTService {
 	
 	public static final Key SECRET = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 	
-	public static final long EXPIRATION_DATE = 3600000*4L;/* 4 horas */
+	public static final long EXPIRATION_DATE = 3600000 * 4L;/* 4 horas */
 	
 	public static final String TOKEN_PREFIX = "Bearer ";
 	
