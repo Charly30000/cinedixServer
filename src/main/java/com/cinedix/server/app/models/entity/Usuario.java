@@ -13,29 +13,41 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 30, unique = true)
+	@Column(length = 30, unique = true, nullable = false)
+	@NotEmpty
 	private String username;
 
-	@Column(length = 60)
+	@Column(length = 60, nullable = false)
+	@NotEmpty
 	private String password;
 
+	@Column(nullable = false)
+	@NotNull
 	private Boolean enabled;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
+	@Email
+	@NotEmpty
 	private String email;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "usuario_id")
 	private List<Role> roles;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "usuario")
+	private List<Entrada> entradas;
 
 	public Long getId() {
 		return id;
@@ -83,6 +95,18 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Entrada> getEntradas() {
+		return entradas;
+	}
+
+	public void setEntradas(List<Entrada> entradas) {
+		this.entradas = entradas;
+	}
+	
+	public void addEntrada(Entrada entrada) {
+		this.entradas.add(entrada);
 	}
 
 	/**
