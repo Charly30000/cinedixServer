@@ -16,11 +16,11 @@ INSERT INTO `cines` (id, nombre, localizacion) VALUES (3, 'cinedix mostoles', 'm
 INSERT INTO `cines` (id, nombre, localizacion) VALUES (4, 'cinedix alcorcon', 'alcorcon');
 
 /* Creamos algunas peliculas */
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (1, 'Los vengadores', 'Los vengadores se forman', null, false);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (2, 'Jimmy neutron', 'Jimmy y sus amigos tienen que ir a buscar a sus padres secuestrados por... Alienigenas!', null, true);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (3, 'Bob esponja', 'La gran pelicula sobre Bob esponja y sus amigos! Dedicada principalmente para los niños!', null, true);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (4, 'Kimetsu no yaiba', 'Tanjiro y sus amigos deberan de ir a buscar respuestas sobre su padre, pero... algo extraño sucederá en el tren que les llevará a las respuestas!', null, true);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (5, '7 apellidos vascos', 'Una gran comedia española donde varias familias se encontraran y ocurriran cosas muy divertidas', null, false);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (1, 'Los vengadores', 'Los vengadores se forman', 'febd5573-390f-49b6-9e15-68528cbc6dfa_losVengadores.png', false);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (2, 'Jimmy neutron', 'Jimmy y sus amigos tienen que ir a buscar a sus padres secuestrados por... Alienigenas!', '75dd8cc2-fc8f-4d21-b8eb-78b46c520d39_jimmyNeutron.png', true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (3, 'Bob esponja', 'La gran pelicula sobre Bob esponja y sus amigos! Dedicada principalmente para los niños!', '91016146-a663-4a1a-add7-12cb66a96061_bobEsponja.png', true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (4, 'Kimetsu no yaiba', 'Tanjiro y sus amigos deberan de ir a buscar respuestas sobre su padre, pero... algo extraño sucederá en el tren que les llevará a las respuestas!', 'e6ab5166-ed95-4dff-bbb4-4fa1c5a60ee2_kimetsuNoYaiba.png', true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (5, '8 apellidos vascos', 'Una gran comedia española donde varias familias se encontraran y ocurriran cosas muy divertidas', 'aa9ae7da-367c-4365-b964-34aab94d8fd9_8ApellidosVascos.png', false);
 
 /* Insertamos sesiones_peliculas */
 INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (1, 30, NOW(), 1, 1);
