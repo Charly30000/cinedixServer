@@ -39,12 +39,13 @@ public class Entrada implements Serializable {
 	@Column(nullable = false, unique = true)
 	private String codigo;
 
+	@NotEmpty
+	@Column(nullable = false)
+	private String estado;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private SesionPelicula sesionPelicula;
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "entrada")
 	private List<SitioOcupado> sitiosOcupados;
 
@@ -80,12 +81,20 @@ public class Entrada implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public SesionPelicula getSesionPelicula() {
-		return sesionPelicula;
+	public List<SitioOcupado> getSitiosOcupados() {
+		return sitiosOcupados;
 	}
 
-	public void setSesionPelicula(SesionPelicula sesionPelicula) {
-		this.sesionPelicula = sesionPelicula;
+	public void setSitiosOcupados(List<SitioOcupado> sitiosOcupados) {
+		this.sitiosOcupados = sitiosOcupados;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	/**

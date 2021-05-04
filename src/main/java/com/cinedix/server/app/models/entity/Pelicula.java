@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class Pelicula implements Serializable {
 
 	@NotEmpty
 	@Column(nullable = false)
+	@Lob // Para longText
 	private String descripcion;
 	
 	//TO DO: cambiar a false y añadir @NotEmpty

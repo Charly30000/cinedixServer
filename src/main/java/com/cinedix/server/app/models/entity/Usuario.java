@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios")
@@ -27,10 +28,12 @@ public class Usuario implements Serializable {
 
 	@Column(length = 30, unique = true, nullable = false)
 	@NotEmpty
+	@Size(min = 5, max = 30)
 	private String username;
 
 	@Column(length = 60, nullable = false)
 	@NotEmpty
+	@Size(min = 8, max = 60)
 	private String password;
 
 	@Column(nullable = false)

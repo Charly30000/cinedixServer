@@ -2,9 +2,7 @@ package com.cinedix.server.app.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,16 +10,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "sesiones_peliculas")
+@Table(name = "sesiones_peliculas", uniqueConstraints = {@UniqueConstraint(columnNames = {"cine_id", "pelicula_id"})})
 public class SesionPelicula implements Serializable {
 
 	@Id
@@ -30,7 +28,7 @@ public class SesionPelicula implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
-	private Integer cantidadSitiosDisponibles;
+	private Integer sitiosTotales;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,9 +41,6 @@ public class SesionPelicula implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pelicula pelicula;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "sesionPelicula")
-	private List<SitioOcupado> sitiosOcupados;
-
 	public Long getId() {
 		return id;
 	}
@@ -55,11 +50,11 @@ public class SesionPelicula implements Serializable {
 	}
 
 	public Integer getCantidadSitiosDisponibles() {
-		return cantidadSitiosDisponibles;
+		return sitiosTotales;
 	}
 
-	public void setCantidadSitiosDisponibles(Integer cantidadSitiosDisponibles) {
-		this.cantidadSitiosDisponibles = cantidadSitiosDisponibles;
+	public void setCantidadSitiosDisponibles(Integer sitiosTotales) {
+		this.sitiosTotales = sitiosTotales;
 	}
 
 	public Date getHoraPelicula() {
@@ -78,25 +73,12 @@ public class SesionPelicula implements Serializable {
 		this.cine = cine;
 	}
 
-	public List<SitioOcupado> getSitiosOcupados() {
-		return sitiosOcupados;
-	}
-
-	public void setSitiosOcupados(List<SitioOcupado> sitiosOcupados) {
-		this.sitiosOcupados = sitiosOcupados;
-	}
-
 	public Pelicula getPelicula() {
 		return pelicula;
 	}
 
 	public void setPelicula(Pelicula pelicula) {
 		this.pelicula = pelicula;
-	}
-
-	public void addSitiosOcupados(SitioOcupado sitioOcupado) {
-		this.sitiosOcupados.add(sitioOcupado);
-		this.setCantidadSitiosDisponibles(this.getCantidadSitiosDisponibles() - 1);
 	}
 
 	/**

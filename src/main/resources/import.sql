@@ -16,54 +16,28 @@ INSERT INTO `cines` (id, nombre, localizacion) VALUES (3, 'cinedix mostoles', 'm
 INSERT INTO `cines` (id, nombre, localizacion) VALUES (4, 'cinedix alcorcon', 'alcorcon');
 
 /* Creamos algunas peliculas */
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (1, 'Los vengadores', 'Los vengadores se forman', null, 1);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (2, 'Jimmy neutron', 'Jimmy y sus amigos tienen que ir a buscar a sus padres secuestrados por... Alienigenas!', null, 1);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (3, 'Bob esponja', 'La gran pelicula sobre Bob esponja y sus amigos! Dedicada principalmente para los niños!', null, 1);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (4, 'Kimetsu no yaiba', 'Tanjiro y sus amigos deberan de ir a buscar respuestas sobre su padre, pero... algo extraño sucederá en el tren que les llevará a las respuestas!', null, 1);
-INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (5, '7 apellidos vascos', 'Una gran comedia española donde varias familias se encontraran y ocurriran cosas muy divertidas', null, 0);
-
-/* Decimos que peliculas tiene cada cine */
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (1, 1);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (1, 2);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (1, 3);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (1, 4);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (1, 5);
-
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (2, 1);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (2, 2);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (2, 3);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (2, 4);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (2, 5);
-
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (3, 1);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (3, 2);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (3, 3);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (3, 4);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (3, 5);
-
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (4, 1);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (4, 2);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (4, 3);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (4, 4);
-INSERT INTO `cines_peliculas` (cine_id, peliculas_id) VALUES (4, 5);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (1, 'Los vengadores', 'Los vengadores se forman', null, false);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (2, 'Jimmy neutron', 'Jimmy y sus amigos tienen que ir a buscar a sus padres secuestrados por... Alienigenas!', null, true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (3, 'Bob esponja', 'La gran pelicula sobre Bob esponja y sus amigos! Dedicada principalmente para los niños!', null, true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (4, 'Kimetsu no yaiba', 'Tanjiro y sus amigos deberan de ir a buscar respuestas sobre su padre, pero... algo extraño sucederá en el tren que les llevará a las respuestas!', null, true);
+INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (5, '7 apellidos vascos', 'Una gran comedia española donde varias familias se encontraran y ocurriran cosas muy divertidas', null, false);
 
 /* Insertamos sesiones_peliculas */
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (1, 26, NOW(), 1, 1);
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (2, 29, NOW(), 1, 2);
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (3, 30, NOW(), 1, 3);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (1, 30, NOW(), 1, 1);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (2, 30, NOW(), 1, 2);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (3, 30, NOW(), 1, 3);
 
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (4, 30, NOW(), 2, 1);
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (5, 30, NOW(), 2, 2);
-INSERT INTO `sesiones_peliculas` (id, cantidad_sitios_disponibles, hora_pelicula, cine_id, pelicula_id) VALUES (6, 30, NOW(), 2, 3);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (4, 30, NOW(), 2, 1);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (5, 30, NOW(), 2, 2);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (6, 30, NOW(), 2, 3);
 
 /* Insertamos entradas */
-INSERT INTO `entradas` (id, codigo, fecha, sesion_pelicula_id, usuario_id) VALUES (1, 'abdefgh', NOW(), 1, 1);
-INSERT INTO `entradas` (id, codigo, fecha, sesion_pelicula_id, usuario_id) VALUES (2, 'abdefyg', NOW(), 1, 1);
-INSERT INTO `entradas` (id, codigo, fecha, sesion_pelicula_id, usuario_id) VALUES (3, 'abdeegh', NOW(), 1, 1);
-INSERT INTO `entradas` (id, codigo, fecha, sesion_pelicula_id, usuario_id) VALUES (4, 'abdfngh', NOW(), 1, 2);
+INSERT INTO `entradas` (id, codigo, fecha, usuario_id, estado) VALUES (1, 'abdefgh', NOW(), 1, 'pagado');
+INSERT INTO `entradas` (id, codigo, fecha, usuario_id, estado) VALUES (2, 'abdefyg', NOW(), 1, 'pagado');
+INSERT INTO `entradas` (id, codigo, fecha, usuario_id, estado) VALUES (3, 'abdeegh', NOW(), 1, 'pagado');
+INSERT INTO `entradas` (id, codigo, fecha, usuario_id, estado) VALUES (4, 'abdfngh', NOW(), 2, 'procesando');
 
-INSERT INTO `entradas` (id, codigo, fecha, sesion_pelicula_id, usuario_id) VALUES (5, 'aidefgh', NOW(), 2, 3);
-
+INSERT INTO `entradas` (id, codigo, fecha, usuario_id, estado) VALUES (5, 'aidefgh', NOW(), 3, 'cancelado');
 
 /* Insertamos sitios_ocupados */
 INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id) VALUES (1, 25, 1, 1);
