@@ -26,6 +26,15 @@ public class Cine implements Serializable {
 	@Column(nullable = false)
 	private String localizacion;
 
+	public Cine() {
+	}
+
+	public Cine(Long id, @NotEmpty String nombre, @NotEmpty String localizacion) {
+		this.id = id;
+		this.nombre = nombre;
+		this.localizacion = localizacion;
+	}
+
 	public Long getId() {
 		return id;
 	}
