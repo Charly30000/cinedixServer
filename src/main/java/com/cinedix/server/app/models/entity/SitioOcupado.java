@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "sitios_ocupados", uniqueConstraints = {@UniqueConstraint(columnNames = {"sitio_ocupado", "sesion_pelicula_id"})})
 public class SitioOcupado implements Serializable {
@@ -26,9 +28,11 @@ public class SitioOcupado implements Serializable {
 	private Integer sitioOcupado;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private SesionPelicula sesionPelicula;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Entrada entrada;
 
 	public SesionPelicula getSesionPelicula() {

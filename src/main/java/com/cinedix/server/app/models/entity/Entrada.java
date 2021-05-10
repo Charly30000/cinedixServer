@@ -16,10 +16,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "entradas")
@@ -29,24 +31,26 @@ public class Entrada implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	@Column
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	private Date fecha;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Europe/Madrid")
+	private Date fechaCreacion;
 
-	@NotEmpty
 	@Column(nullable = false, unique = true)
 	private String codigo;
 
-	@NotEmpty
 	@Column(nullable = false)
 	private String estado;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	//@JsonBackReference
+	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Usuario usuario;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "entrada")
+	@JsonManagedReference
 	private List<SitioOcupado> sitiosOcupados;
 
 	public Long getId() {
@@ -57,12 +61,12 @@ public class Entrada implements Serializable {
 		this.id = id;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaCreacion(Date fecha) {
+		this.fechaCreacion = fecha;
 	}
 
 	public String getCodigo() {

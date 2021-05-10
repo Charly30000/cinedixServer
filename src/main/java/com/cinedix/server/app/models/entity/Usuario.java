@@ -18,6 +18,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
@@ -50,6 +52,9 @@ public class Usuario implements Serializable {
 	private List<Role> roles;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "usuario")
+	@JsonIgnore
+	//@JsonManagedReference
+	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private List<Entrada> entradas;
 
 	public Long getId() {

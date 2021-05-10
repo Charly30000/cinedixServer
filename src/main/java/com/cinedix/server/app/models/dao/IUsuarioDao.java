@@ -1,10 +1,10 @@
 package com.cinedix.server.app.models.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.cinedix.server.app.models.entity.Usuario;
 
-public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
+public interface IUsuarioDao extends PagingAndSortingRepository<Usuario, Long>{
 
 	//@Query("select u from Usuario where u.username = ?1")
 	public Usuario findByUsername(String username);
