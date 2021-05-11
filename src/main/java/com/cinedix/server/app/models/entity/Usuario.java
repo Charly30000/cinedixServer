@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +38,6 @@ public class Usuario implements Serializable {
 	private String password;
 
 	@Column(nullable = false)
-	@NotNull
 	private Boolean enabled;
 
 	@Column(unique = true, nullable = false)
@@ -53,9 +51,24 @@ public class Usuario implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "usuario")
 	@JsonIgnore
-	//@JsonManagedReference
-	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	// @JsonManagedReference
+	// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private List<Entrada> entradas;
+
+	private Usuario() {
+	}
+
+	private Usuario(Long id, @NotEmpty @Size(min = 5, max = 30) String username,
+			@NotEmpty @Size(min = 8, max = 60) String password, Boolean enabled, @Email @NotEmpty String email,
+			List<Role> roles, List<Entrada> entradas) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.email = email;
+		this.roles = roles;
+		this.entradas = entradas;
+	}
 
 	public Long getId() {
 		return id;
@@ -112,7 +125,7 @@ public class Usuario implements Serializable {
 	public void setEntradas(List<Entrada> entradas) {
 		this.entradas = entradas;
 	}
-	
+
 	public void addEntrada(Entrada entrada) {
 		this.entradas.add(entrada);
 	}
