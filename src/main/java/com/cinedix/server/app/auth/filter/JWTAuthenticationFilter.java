@@ -84,7 +84,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Map<String, Object> body = new HashMap<String, Object>();
 		body.put("token", token);
 		body.put("user", (User) authResult.getPrincipal());
-		body.put("mensaje", "Has iniciado sesion con exito!");
+		body.put("message", "Has iniciado sesion con exito!");
 		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
 		response.setStatus(200);
@@ -97,7 +97,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			AuthenticationException failed) throws IOException, ServletException {
 		
 		Map<String, Object> body = new HashMap<String, Object>();
-		body.put("mensaje", "Error de autenticacion: username o password invalidos!");
+		body.put("message", "Error de autenticacion: username o password invalidos!");
 		body.put("error", failed.getMessage());
 		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
