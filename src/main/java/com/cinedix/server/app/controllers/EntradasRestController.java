@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ import com.cinedix.server.app.models.entity.Entrada;
 import com.cinedix.server.app.models.entity.SesionPelicula;
 import com.cinedix.server.app.models.entity.SitioOcupado;
 import com.cinedix.server.app.models.entity.Usuario;
+import com.cinedix.server.app.models.entity.request.SesionPeliculaRequest;
+import com.cinedix.server.app.models.entity.response.EntradaResponse;
+import com.cinedix.server.app.models.entity.response.SitioOcupadoResponse;
 import com.cinedix.server.app.models.service.IEntradaService;
 import com.cinedix.server.app.models.service.ISesionPeliculaService;
 import com.cinedix.server.app.models.service.ISitioOcupadoService;
@@ -55,63 +59,49 @@ public class EntradasRestController {
 	private ISesionPeliculaService sesionPeliculaService;
 
 	@GetMapping("/entradas")
-	public Object[] obtenerEntradas(Authentication auth) {
+	public List<EntradaResponse> obtenerEntradas(Authentication auth) {
 
 		List<Entrada> entradas = usuarioService.findByUsername(auth.getName()).getEntradas();
-		Object[] respuesta = new Object[entradas.size()];
+		List<EntradaResponse> entradasResponse = new ArrayList<>();
 
-		int iterador = 0;
 		for (Entrada e : entradas) {
-			Map<String, Object> entrada = new HashMap<>();
-			entrada.put("id", e.getId());
-			entrada.put("codigo", e.getCodigo());
-			entrada.put("estado", e.getEstado());
-			entrada.put("sitiosOcupados", e.getSitiosOcupados());
-			entrada.put("horaPelicula",
-					formatearFecha(e.getSitiosOcupados().get(0).getSesionPelicula().getHoraPelicula()));
-			entrada.put("fechaCreacion", formatearFecha(e.getFechaCreacion()));
-			entrada.put("cine", e.getSitiosOcupados().get(0).getSesionPelicula().getCine().getNombre());
-			entrada.put("pelicula", e.getSitiosOcupados().get(0).getSesionPelicula().getPelicula().getNombre());
+			List<SitioOcupadoResponse> sitiosOcupados = new ArrayList<>();
+			for (SitioOcupado s : e.getSitiosOcupados()) {
+				sitiosOcupados.add(new SitioOcupadoResponse(s.getId(), s.getSitioOcupado()));
+			}
 
-			respuesta[iterador] = entrada;
-			iterador++;
+			entradasResponse.add(new EntradaResponse(e.getCodigo(), 
+					e.getEstado(), 
+					sitiosOcupados,
+					formatearFecha(e.getSitiosOcupados().get(0).getSesionPelicula().getHoraPelicula()),
+					e.getSitiosOcupados().get(0).getSesionPelicula().getCine().getNombre(),
+					e.getSitiosOcupados().get(0).getSesionPelicula().getPelicula().getNombre(),
+					formatearFecha(e.getFechaCreacion()), 
+					e.getId()));
 		}
 
-		return respuesta;
+		return entradasResponse;
 	}
 
 	@PostMapping("/entradas/crear")
 	@ResponseBody
-	public ResponseEntity<?> crearEntrada(@RequestBody @Valid Map<String, Object> sesionPelicula, Authentication auth) {
+	public ResponseEntity<?> crearEntrada(@RequestBody @Valid SesionPeliculaRequest sesionPelicula,
+			BindingResult result, Authentication auth) {
 
 		Map<String, String> respuesta = new HashMap<>();
 		try {
-			if (sesionPelicula.isEmpty()) {
-				respuesta.put("message", "No se han detectado datos");
-				logger.info("No se han recibido los datos necesarios");
-				return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.EXPECTATION_FAILED);
-			} else if (sesionPelicula.get("sesionPelicula") == null || sesionPelicula.get("sitiosOcupados") == null) {
-				respuesta.put("message", "No se han recibido los datos necesarios");
-				logger.info("No se han recibido los datos necesarios");
-				return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.EXPECTATION_FAILED);
+
+			if (result.hasErrors()) {
+				respuesta.put("message", "Los parametros no siguen los estandares correctos");
+				logger.info("Los parametros no siguen los estandares correctos");
+				return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.BAD_REQUEST);
 			}
 
-			// Obtengo los parametros de la sesion de la pelicula y los sitios ocupados
-			Long sesion = null;
-			Integer[] sitiosOcupados = null;
+			SesionPelicula sesionBBDD = sesionPeliculaService
+					.findOne(Long.parseLong(sesionPelicula.getSesionPelicula().toString()));
 
-			sesion = Long.parseLong(sesionPelicula.get("sesionPelicula").toString());
-			String sitiosOcupadosString = sesionPelicula.get("sitiosOcupados").toString().replace("[", "")
-					.replace("]", "").replace(" ", "");
-			String[] sitiosString = sitiosOcupadosString.split(",");
-			sitiosOcupados = new Integer[sitiosString.length];
-			for (int i = 0; i < sitiosString.length; i++) {
-				sitiosOcupados[i] = Integer.parseInt(sitiosString[i]);
-			}
-
-			SesionPelicula sesionBBDD = sesionPeliculaService.findOne(sesion);
-			
-			if (sesionBBDD.getSitiosOcupados().size() + sitiosOcupados.length > sesionBBDD.getSitiosTotales()) {
+			if (sesionBBDD.getSitiosOcupados().size() + sesionPelicula.getSitiosOcupados().size() > sesionBBDD
+					.getSitiosTotales()) {
 				respuesta.put("message", "Lo sentimos, no hay asientos suficientes");
 				logger.info("No hay asientos suficientes");
 				return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.EXPECTATION_FAILED);
@@ -121,9 +111,9 @@ public class EntradasRestController {
 
 			// Creo los nuevos sitios ocupados
 			List<SitioOcupado> sitiosOcupadosList = new ArrayList<>();
-			for (int i = 0; i < sitiosOcupados.length; i++) {
+			for (Integer i : sesionPelicula.getSitiosOcupados()) {
 				SitioOcupado aux = new SitioOcupado();
-				aux.setSitioOcupado(sitiosOcupados[i]);
+				aux.setSitioOcupado(i);
 				aux.setEntrada(entrada);
 				aux.setSesionPelicula(sesionBBDD);
 				sitiosOcupadosList.add(aux);
@@ -139,27 +129,25 @@ public class EntradasRestController {
 			entrada.setSitiosOcupados(sitiosOcupadosList);
 
 			entradaService.save(entrada);
-			
+
 		} catch (NumberFormatException ex) {
 			respuesta.put("message", "Lo sentimos, ha ocurrido un error en el servidor al parsear");
 			logger.info("Error al parsear la cadena:" + ex.getMessage());
 			return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.EXPECTATION_FAILED);
-			
+
 		} catch (DataIntegrityViolationException ex) {
-			respuesta.put("message",
-					"Lo sentimos, los asientos que intentas introducir ya han sido escogidos");
+			respuesta.put("message", "Lo sentimos, los asientos que intentas introducir ya han sido escogidos");
 			logger.info("Campos en la BBDD ya existentes, probablemente los sitios ya han sido escogidos: "
 					+ ex.getMessage());
 			return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
-			
+
 		} catch (DataAccessException ex) {
 			respuesta.put("message", "La sesion a la que te intentas unir no existe en la BBDD");
 			logger.info("Intento de unirse a una sesion inexistente: " + ex.getMessage());
 			return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.NOT_FOUND);
-			
+
 		} catch (Exception ex) {
-			respuesta.put("message",
-					"Lo sentimos, ha ocurrido un error inesperado, vuelve a intentarlo por favor");
+			respuesta.put("message", "Lo sentimos, ha ocurrido un error inesperado, vuelve a intentarlo por favor");
 			logger.info("Error desconocido al intentar almacenar la nueva entrada: " + ex.getMessage());
 			return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
