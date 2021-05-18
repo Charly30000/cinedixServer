@@ -50,4 +50,9 @@ public class SesionPeliculaServiceImpl implements ISesionPeliculaService {
 		return sesionPeliculaDao.obtenerSesionEntradaPorCinePeliculaFecha(cineId, peliculaId, horaPelicula);
 	}
 
+	@Override
+	public List<SesionPelicula> obtenerSesionesPeliculasPorCinePelicula(Long cineId, Long peliculaId) {
+		return sesionPeliculaDao.obtenerSesionesPeliculasPorCinePelicula(cineId, peliculaId);
+	}
+
 }

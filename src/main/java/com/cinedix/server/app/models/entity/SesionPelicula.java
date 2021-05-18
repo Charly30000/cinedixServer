@@ -64,14 +64,6 @@ public class SesionPelicula implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getCantidadSitiosDisponibles() {
-		return sitiosTotales;
-	}
-
-	public void setCantidadSitiosDisponibles(Integer sitiosTotales) {
-		this.sitiosTotales = sitiosTotales;
-	}
-
 	public Date getHoraPelicula() {
 		return horaPelicula;
 	}

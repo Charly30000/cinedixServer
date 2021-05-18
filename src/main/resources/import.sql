@@ -63,22 +63,26 @@ INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (
 INSERT INTO `peliculas` (id, nombre, descripcion, ruta_imagen, estreno) VALUES (5, '8 apellidos vascos', 'Rafa, un señorito andaluz que nunca ha salido de Sevilla, decide dejarlo todo para conquistar a Amaia, una chica vasca. Se muda al País Vasco y allí tendrá que adaptarse a un nuevo entorno y hacerse pasar por vasco para ganarse la aprobación del padre de Amaia.', 'aa9ae7da-367c-4365-b964-34aab94d8fd9_8ApellidosVascos.png', false);
 
 /* Insertamos sesiones_peliculas */
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (1, 30, NOW(), 1, 1);
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (2, 30, NOW(), 1, 2);
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (3, 30, NOW(), 1, 3);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (1, 30, '2021-7-15 17:00', 1, 1);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (8, 30, '2021-7-15 19:00', 1, 1);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (2, 30, '2021-7-14 20:00', 1, 2);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (3, 30, '2021-6-20 15:00', 1, 3);
 
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (4, 30, NOW(), 2, 1);
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (5, 30, NOW(), 2, 2);
-INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (6, 30, NOW(), 2, 3);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (4, 30, '2021-9-2 18:00', 2, 1);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (5, 30, '2021-6-3 16:30', 2, 2);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (6, 30, '2021-7-15 19:30', 2, 3);
+INSERT INTO `sesiones_peliculas` (id, sitios_totales, hora_pelicula, cine_id, pelicula_id) VALUES (7, 30, '2021-6-9 17:00', 2, 4);
 
 /* Insertamos entradas */
 INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (1, 'abdefgh', NOW(), 1, 'pagado');
-INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (2, 'abdefyg', NOW(), 1, 'pagado');
-INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (3, 'abdeegh', NOW(), 1, 'pagado');
+INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (2, 'abdefyg', NOW(), 1, 'procesando');
+INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (3, 'abdeegh', NOW(), 1, 'cancelado');
 
 INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (4, 'abdfngh', NOW(), 2, 'procesando');
 
 INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (5, 'aidefgh', NOW(), 3, 'cancelado');
+
+INSERT INTO `entradas` (id, codigo, fecha_creacion, usuario_id, estado) VALUES (6, '1234567ygfd', NOW(), 1, 'pagado');
 
 /* Insertamos sitios_ocupados */
 INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id) VALUES (1, 25, 1, 1);
@@ -90,6 +94,8 @@ INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id
 INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id) VALUES (6, 15, 4, 1);
 
 INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id) VALUES (7, 18, 5, 2);
+
+INSERT INTO `sitios_ocupados` (id, sitio_ocupado, entrada_id, sesion_pelicula_id) VALUES (8, 5, 6, 7);
 
 
 

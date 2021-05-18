@@ -15,4 +15,7 @@ public interface ISesionPeliculaDao extends CrudRepository<SesionPelicula, Long>
 	
 	@Query("SELECT sp FROM SesionPelicula sp WHERE sp.cine.id = ?1 AND sp.pelicula.id = ?2 AND sp.horaPelicula = ?3")
 	public SesionPelicula obtenerSesionEntradaPorCinePeliculaFecha(Long cineId, Long peliculaId, Date horaPelicula);
+	
+	@Query("SELECT sp FROM SesionPelicula sp WHERE sp.cine.id = ?1 AND sp.pelicula.id = ?2")
+	public List<SesionPelicula> obtenerSesionesPeliculasPorCinePelicula(Long cineId, Long peliculaId);
 }

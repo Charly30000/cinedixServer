@@ -18,4 +18,6 @@ public interface ISesionPeliculaService {
 	public List<SesionPelicula> obtenerSesionesPeliculasPorPelicula(Long id);
 	
 	public SesionPelicula obtenerSesionEntradaPorCinePeliculaFecha(Long cineId, Long peliculaId, Date horaPelicula);
+	
+	public List<SesionPelicula> obtenerSesionesPeliculasPorCinePelicula(Long cineId, Long peliculaId);
 }

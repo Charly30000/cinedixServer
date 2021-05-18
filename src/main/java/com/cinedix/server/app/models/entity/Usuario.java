@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
 	private Boolean enabled;
 
 	@Column(unique = true, nullable = false)
-	@Email
+	@Email(regexp = "\\w+@\\w+\\.\\w+")
 	@NotEmpty
 	private String email;
 

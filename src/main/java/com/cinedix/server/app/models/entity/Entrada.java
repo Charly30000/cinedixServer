@@ -34,7 +34,7 @@ public class Entrada implements Serializable {
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Europe/Madrid")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm"/*, timezone = "Europe/Madrid"*/)
 	private Date fechaCreacion;
 
 	@Column(nullable = false, unique = true)
