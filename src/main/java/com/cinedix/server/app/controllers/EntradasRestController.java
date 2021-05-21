@@ -89,6 +89,7 @@ public class EntradasRestController {
 			BindingResult result, Authentication auth) {
 
 		Map<String, String> respuesta = new HashMap<>();
+		String codigo = null;
 		try {
 
 			if (result.hasErrors()) {
@@ -121,7 +122,7 @@ public class EntradasRestController {
 
 			// Creo la nueva entrada con todos los datos necesarios
 			Usuario usuario = usuarioService.findByUsername(auth.getName());
-			String codigo = UUID.randomUUID().toString() + usuario.getId();
+			codigo = UUID.randomUUID().toString();
 			entrada.setUsuario(usuario);
 			entrada.setCodigo(codigo);
 			entrada.setEstado(CEstadoEntrada.PROCESANDO);
@@ -153,6 +154,7 @@ public class EntradasRestController {
 		}
 
 		respuesta.put("message", "ok");
+		respuesta.put("codigo", codigo);
 		return new ResponseEntity<Map<String, String>>(respuesta, HttpStatus.CREATED);
 	}
 
