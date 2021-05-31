@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cinedix.server.app.constantes.CRoles;
 import com.cinedix.server.app.models.entity.Role;
 import com.cinedix.server.app.models.entity.Usuario;
+import com.cinedix.server.app.models.entity.response.ModificarUsuario;
 import com.cinedix.server.app.models.service.IUsuarioService;
 
 @RestController
@@ -92,7 +93,7 @@ public class UsuarioRestController {
 
 	@Secured("ROLE_USER")
 	@PutMapping("/usuario/modificar")
-	public ResponseEntity<?> modificar(@RequestBody @Valid Usuario usuario, BindingResult result, Authentication authentication) {
+	public ResponseEntity<?> modificar(@RequestBody @Valid ModificarUsuario usuario, BindingResult result, Authentication authentication) {
 		Map<String, Object> respuesta = new HashMap<>();
 		
 		if (result.hasErrors()) {
@@ -104,7 +105,15 @@ public class UsuarioRestController {
 		
 		try {
 			Usuario usuarioActualizar = usuarioService.findByUsername(nombreUsuario);
-			usuarioActualizar.setPassword(passwordEncoder.encode(usuario.getPassword()));
+			
+			boolean claveCorrecta = passwordEncoder.matches(usuario.getOldPassword(), usuarioActualizar.getPassword());
+			if (!claveCorrecta) {
+				respuesta.put("message", "Los parametros no coinciden con los del servidor, revisa tus datos");
+				System.out.println("no se modifica");
+				return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.BAD_REQUEST);
+			}
+			
+			usuarioActualizar.setPassword(passwordEncoder.encode(usuario.getNewPassword()));
 			usuarioActualizar.setEmail(usuario.getEmail());
 			
 			usuarioService.save(usuarioActualizar);
