@@ -109,7 +109,6 @@ public class UsuarioRestController {
 			boolean claveCorrecta = passwordEncoder.matches(usuario.getOldPassword(), usuarioActualizar.getPassword());
 			if (!claveCorrecta) {
 				respuesta.put("message", "Los parametros no coinciden con los del servidor, revisa tus datos");
-				System.out.println("no se modifica");
 				return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.BAD_REQUEST);
 			}
 			
